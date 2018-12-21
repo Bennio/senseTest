@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+
+    {% for app in apps %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ app.userid }}</a>
+              <small class="text-muted">{{ app.app }}</small>
+            </div>
+            <h2><a class="article-title" href="{{ url_for('appsense', user_id=app.id) }}">{{ app.userid }}</a></h2>
+            <p class="article-content">{{ app.timestamp }}</p>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}

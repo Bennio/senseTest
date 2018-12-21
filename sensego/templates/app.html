@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+{% block content %}
+  <article class="media content-section">
+{#    <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">#}
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="#">{{ app.userid }}</a>
+        <small class="text-muted">{{ app.timestamp }}</small>
+{#        {% if post.author == current_user %}#}
+          <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_app', user_id=app.id) }}">Update</a>
+            <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+          </div>
+{#        {% endif %}#}
+      </div>
+        <div class="content-section">
+            <h3>Transaction Informations for user {{ app.userid }}</h3>
+            <p class='text-muted'>Predictive Marketing. Client responsive.
+              <ul class="list-group">
+                <li class="list-group-item list-group-item-light"><i class="article-content">User ID : </i>{{ app.userid }}</li>
+                <li class="list-group-item list-group-item-light"><i class="article-content">App Launched : </i>
+                    {% for a_launch in app_launch %}
+                        {{ a_launch.ap_launch }}
+                    {% endfor %}
+                </li>
+
+                <li class="list-group-item list-group-item-light"><i class="article-content">number_of_days_active_last_7 _days : </i>
+                    {% for n_days in number_of_days %}
+                        {{ n_days.nb }}
+                    {% endfor %}
+                </li>
+                 {% for m_launch in most_launch %}
+                     <li class="list-group-item list-group-item-light"><i class="article-content">most_active_day_last_7_days : </i> {{ m_launch.ts }} </li>
+                     <li class="list-group-item list-group-item-light"><i class="article-content">most_launched_app_last_7_days : </i> {{ m_launch.app }} </li>
+                 {% endfor %}
+
+
+
+              </ul>
+            </p>
+          </div>
+
+
+
+{#      <p class="article-content">{{ app.app }}</p>#}
+    </div>
+  </article>
+  <!-- Modal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <form action="{{ url_for('delete_app', user_id=app.id) }}" method="POST">
+            <input class="btn btn-danger" type="submit" value="Delete">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
